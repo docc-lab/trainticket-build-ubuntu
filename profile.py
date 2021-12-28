@@ -16,6 +16,9 @@ request = pc.makeRequestRSpec()
 # Add a raw PC to the request.
 node = request.RawPC("node")
 
+# Check if this script is even running
+
+
 # Install and execute a script that is contained in the repository.
 node.addService(pg.Execute(shell="bash", command="/local/repository/changeShells.sh"))
 #node.addService(pg.Execute(shell="bash", command="/local/repository/dockerSetup.sh"))
