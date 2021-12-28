@@ -17,7 +17,7 @@ request = pc.makeRequestRSpec()
 node = request.RawPC("node")
 
 # Check if this script is even running
-with open('/tmp/profile_test.txt', 'x') as outfile:
+with open('/tmp/profile_test.txt', 'w') as outfile:
 	outfile.write("testing profile.py\n")
 
 # Install and execute a script that is contained in the repository.
