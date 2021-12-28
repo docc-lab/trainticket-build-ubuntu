@@ -16,13 +16,11 @@ request = pc.makeRequestRSpec()
 # Add a raw PC to the request.
 node = request.RawPC("node")
 
-# Check if this script is even running
-with open('/tmp/profile_test.txt', 'w') as outfile:
-	outfile.write("testing profile.py\n")
-
 # Install and execute a script that is contained in the repository.
+node.addService(pg.Execute(shell="bash", command="/local/repository/aptSetup.sh"))
+node.addService(pg.Execute(shell="bash", command="/local/repository/shcSetup.sh"))
 node.addService(pg.Execute(shell="bash", command="/local/repository/changeShells.sh"))
-#node.addService(pg.Execute(shell="bash", command="/local/repository/dockerSetup.sh"))
+node.addService(pg.Execute(shell="bash", command="/local/repository/dockerSetup.sh"))
 
 # Print the RSpec to the enclosing page.
 pc.printRequestRSpec(request)
