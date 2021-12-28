@@ -14,4 +14,5 @@ sudo chmod +x /usr/local/bin/docker-compose
 sudo docker-compose --version
 sudo echo -e '\n\nexport PATH=$PATH:/usr/local/bin' >> .bashrc
 source .bashrc
-
+docker
+docker-compose
