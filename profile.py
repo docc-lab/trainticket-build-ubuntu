@@ -18,9 +18,6 @@ node = request.RawPC("node")
 
 # Install and execute a script that is contained in the repository.
 node.addService(pg.Execute(shell="bash", command="/local/repository/changeShells.sh"))
-#node.addService(pg.Execute(shell="bash", command="/local/repository/aptSetup.sh"))
-#node.addService(pg.Execute(shell="bash", command="/local/repository/shcSetup.sh"))
-#node.addService(pg.Execute(shell="bash", command="/local/repository/dockerSetup.sh"))
 node.addService(pg.Execute(shell="bash", command="/local/repository/setupAll.sh"))
 
 # Print the RSpec to the enclosing page.
