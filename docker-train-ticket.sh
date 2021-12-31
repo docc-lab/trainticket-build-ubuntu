@@ -52,12 +52,12 @@ if [[ $START_FLAG == 1 ]]; then
 		exit 4
 	fi
 
-	sudo touch START_FILE
+	sudo touch $START_FILE
 	if [[ $JAEGER_FLAG == 0 ]]; then
 		sudo docker-compose -f $DOCKER_QUICKSTART_FILE -p train-ticket-plain up --detach
 	else
 		sudo docker-compose -f $DOCKER_QUICKSTART_JAEGER_FILE -p train-ticket-jaeger up --detach
-		sudo touch JAEGER_FLAG_FILE
+		sudo touch $JAEGER_FLAG_FILE
 	fi
 elif [[ $STOP_FLAG == 1 ]]; then
 	if [[ $START_FLAG == 1 ]]; then
@@ -70,9 +70,9 @@ elif [[ $STOP_FLAG == 1 ]]; then
 		exit 5
 	fi
 
-	sudo rm -rf START_FILE
+	sudo rm -rf $START_FILE
 	if [[ -f $JAEGER_FLAG_FILE ]]; then
-		sudo rm -rf JAEGER_FLAG_FILE
+		sudo rm -rf $JAEGER_FLAG_FILE
 		sudo docker container kill $(sudo docker container ps --filter "name=train-ticket-jaeger" -q)
 	else
 		sudo docker container kill $(sudo docker container ps --filter "name=train-ticket-plain" -q)
