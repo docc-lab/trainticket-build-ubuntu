@@ -1,11 +1,12 @@
 #!/bin/bash
 
 START_FILE=/local/checkpoints/train-ticket/docker-started
+JAEGER_FLAG_FILE=/local/checkpoints/train-ticket/jaeger
 DOCKER_QUICKSTART_FILE=/local/train-ticket/deployment/docker-compose-manifests/quickstart-docker-compose.yml
 DOCKER_QUICKSTART_JAEGER_FILE=/local/train-ticket/deployment/docker-compose-manifests/docker-compose-with-jaeger.yml
 
 STARTED=0
-if [[ -f START_FILE ]]; then
+if [[ -f $START_FILE ]]; then
 	STARTED=1
 fi
 
@@ -51,12 +52,13 @@ if [[ $START_FLAG == 1 ]]; then
 		exit 4
 	fi
 
+	sudo touch START_FILE
 	if [[ $JAEGER_FLAG == 0 ]]; then
 		sudo docker-compose -f $DOCKER_QUICKSTART_FILE -p train-ticket-plain up --detach
 	else
 		sudo docker-compose -f $DOCKER_QUICKSTART_JAEGER_FILE -p train-ticket-jaeger up --detach
+		sudo touch JAEGER_FLAG_FILE
 	fi
-	sudo touch START_FILE
 elif [[ $STOP_FLAG == 1 ]]; then
 	if [[ $START_FLAG == 1 ]]; then
 		echo "Cannot set both start and stop flags!"
@@ -68,12 +70,13 @@ elif [[ $STOP_FLAG == 1 ]]; then
 		exit 5
 	fi
 
-	if [[ $JAEGER_FLAG == 0 ]]; then
-		sudo docker container kill $(sudo docker container ps --filter "name=train-ticket-plain" -q)
-	else
-		sudo docker container kill $(sudo docker container ps --filter "name=train-ticket-jaeger" -q)
-	fi
 	sudo rm -rf START_FILE
+	if [[ -f $JAEGER_FLAG_FILE ]]; then
+		sudo rm -rf JAEGER_FLAG_FILE
+		sudo docker container kill $(sudo docker container ps --filter "name=train-ticket-jaeger" -q)
+	else
+		sudo docker container kill $(sudo docker container ps --filter "name=train-ticket-plain" -q)
+	fi
 else
 	echo "Must set either [[ -S / --start ]] or [[ -Q / --quit / --stop ]] flag!"
 	exit 2
