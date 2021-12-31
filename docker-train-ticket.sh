@@ -15,7 +15,7 @@ JAEGER_FLAG=0
 
 for arg in $@
 do
-	case flag in
+	case $arg in
 		'-S' | '--start')
 			# if [[ $STARTED == 1 ]]; then
 			# 	echo "TrainTicket has already been started!"
