@@ -78,7 +78,7 @@ if params.physType != "":
 
 # Optional Blockstore
 if params.tempFileSystemSize > 0 or params.tempFileSystemMax:
-    bs = node.Blockstore(name + "-bs", params.tempFileSystemMount)
+    bs = node.Blockstore("node-bs", params.tempFileSystemMount)
     if params.tempFileSystemMax:
         bs.size = "0GB"
     else:
