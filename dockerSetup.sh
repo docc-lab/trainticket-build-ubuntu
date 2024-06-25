@@ -25,7 +25,7 @@ sudo systemctl stop docker.service
 sudo systemctl stop docker.socket
 
 SEARCH_STRING="ExecStart=/usr/bin/dockerd -H fd://"
-REPLACE_STRING="ExecStart=/usr/bin/dockerd -g /mydata/docker -H fd://"
+REPLACE_STRING="ExecStart=/usr/bin/dockerd --data-root /mydata/docker -H fd://"
 sudo sed -i "s#$SEARCH_STRING#$REPLACE_STRING#" /lib/systemd/system/docker.service
 
 sudo mkdir -p /mydata/docker
